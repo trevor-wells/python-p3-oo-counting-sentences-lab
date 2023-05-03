@@ -2,9 +2,19 @@
 
 class MyString:
     
-    def __init__(self, value = " "):
-        if type(value) == str:
-          self.value = value
+    def __init__(self, value = ""):
+      self._value = value
+    
+    def get_value(self):
+      return self._value
+
+    def set_value(self, stringVal):
+      if (type(stringVal) == str):
+        self._value = stringVal
+      else:
+        print("The value must be a string.")
+
+    value = property(get_value, set_value)
 
     def is_sentence(self):
        return self.value[-1] == "."
@@ -16,14 +26,10 @@ class MyString:
        return self.value[-1] == "!"
     
     def count_sentences(self):
-       new = self.value.replace("?",".")
-       new = new.replace("!",".")
-       new = new.split(".")
-       count = 0
-       for string in new:
-          print(string)
-          if string != "":
-             count += 1
-          else:
-             print("The value must be a string.")
-       return count
+      value = self.value
+      for punc in ['!','?']:
+          value = value.replace(punc, '.')
+      
+      sentences = [s for s in value.split('.') if s]
+      
+      return len(sentences)
